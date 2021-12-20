@@ -31,6 +31,11 @@ public class LoginController {
         proSer = p;
     }
 
+    @GetMapping("/mainpage")
+    public String showMainPage() {
+        return "/admin/admin-page";
+    }
+
     @GetMapping("/login")
     public String showFormLogin(Model model) {
         Customer c = new Customer();

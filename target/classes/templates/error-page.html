@@ -18,9 +18,19 @@
         </div>
     </div>
 
-    <div class="text-center">
-        <a class="btn btn-info" th:href="@{/login}">Login</a>
-        <a class="btn btn-primary" th:href="@{/products/list}">Back to store</a>
-    </div>
+    <span th:if="${session.userLogin == null || session.userLogin.roleId == 'User'}">
+        <div class="text-center">
+            <a class="btn btn-info" th:href="@{/login}">Login</a>
+            <a class="btn btn-primary" th:href="@{/products/list}">Back to store</a>
+        </div>
+    </span>
+    <span th:if="${session.userLogin.roleId == 'Admin'}">
+        <div class="text-center">
+            <a class="btn btn-info" th:href="@{/admin/customers/list}">Customer management</a>
+            <a class="btn btn-primary" th:href="@{/admin/products/list}">Product management</a>
+            <a class="btn btn-success" th:href="@{/admin/orders/list}">Bill management</a>
+        </div>
+    </span>
+
 </body>
 </html>
