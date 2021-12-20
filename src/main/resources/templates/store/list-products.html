@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Product page</title>
+</head>
+<body style="background-color: #BBF2F8">
+
+<span th:if="${session.userLogin != null}">
+        <div class="d-flex justify-content-end mt-2 mb-2">
+            <span th:if="${session.userLogin.roleId == 'User'}">
+                <a style="margin-right:0.5rem" class="btn btn-info"
+                   th:href="@{/store/showCart}">View cart</a>
+            </span>
+            <a style="margin-right:0.5rem" class="btn btn-primary"
+               th:href="@{/logout}">Log out</a>
+        </div>
+<span th:if="${session.userLogin == null}">
+         <a style="margin-right:0.6rem" class="btn btn-info mt-2 mb-2"
+            th:href="@{/login}">Log in</a>
+    </span>
+</span>
+
+<div class="container">
+
+    <h3 class="text-center text-info mt-2 mb-3">📚 PETER STORE 📚</h3>
+
+    <form action="#" th:action="@{/store/search}" method="GET" class="mt-2 mb-2 d-flex justify-content-center">
+        <input th:name="searchValue" type="text" placeholder="Search book ..." class="form-control"/>
+        <button class="btn btn-primary">Search</button>
+    </form>
+
+    <span th:if="${message_store != null}">
+        <b><i><h3 class="text-danger text-center" th:text="${message_store}"/></i></b>
+    </span>
+
+    <table class="table table-striped table-bordered" style="background-color: #C4F181">
+        <thead class="text-center">
+        <tr>
+            <th>Book name</th>
+            <th>Quantity</th>
+            <th>Price (VND)</th>
+            <th>Add to cart</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pro : ${products}">
+            <td th:text="${pro.productName}"/>
+            <td class="text-center" th:text="${pro.quantityInStock}"/>
+            <td style="text-align:right" th:text="${pro.exportPrice}"/>
+            <td class="text-center">
+                <a th:href="@{/store/addToCart(productId=${pro.id})}"
+                   class="btn btn-info">Add
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+</body>
+</html>
