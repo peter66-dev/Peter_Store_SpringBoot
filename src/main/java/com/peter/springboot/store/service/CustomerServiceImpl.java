@@ -23,6 +23,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<Customer> getAllCustomersActive() {
+        return repo.findByStatusTrue();
+    }
+
+    @Override
     public Customer getCustomer(int id) {
         Optional<Customer> o = repo.findById(id);
         if (o.isPresent()) {
@@ -38,7 +43,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(int id) {
-        repo.deleteById(id);
+        Customer c = repo.getById(id);
+        c.setStatus(false);
+        repo.save(c);
     }
 
     @Override

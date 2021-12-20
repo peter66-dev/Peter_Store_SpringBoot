@@ -89,7 +89,7 @@ public class CustomerController {
                 } else {
                     ser.deleteCustomer(id);
                     model.addAttribute("message_customer",
-                            "Delete customer " + user.getName() + " successfully!");
+                            "Deleted customer " + user.getName() + " successfully!");
                 }
             }
         } catch (Exception ex) {

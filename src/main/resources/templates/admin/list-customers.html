@@ -8,55 +8,71 @@
     <title>Customer page</title>
 </head>
 <body>
-<div class="container">
-    <span th:if="${session.userLogin == null}">
-        <div class="text-center">
-            <h3 class="text-primary">MÀY KHÔNG PHẢI LÀ ADMIN!</h3>
-            <h2 class="text-danger">*** ĐỀ NGHỊ RA KHỎI CHỖ NÀY NGAY LẬP TỨC ***</h2>
+<span th:if="${session.userLogin == null}">
+            <div class="text-center">
+                <h3 class="text-primary">MÀY KHÔNG PHẢI LÀ ADMIN!</h3>
+                <h2 class="text-danger">*** ĐỀ NGHỊ RA KHỎI CHỖ NÀY NGAY LẬP TỨC ***</h2>
+            </div>
+        </span>
+<span th:unless="${session.userLogin == null}">
+        <div class="d-flex justify-content-end mt-2 mb-2">
+            <a style="margin-right:0.5rem" class="btn btn-primary"
+               th:href="@{/logout}">Log out</a>
         </div>
-    </span>
-    <span th:unless="${session.userLogin == null}">
-        <h3 class="text-center text-info"
-                th:text="'Welcome admin ' + ${session.userLogin.name}"/>
+        <div class="container">
+        <h3 class="text-center text-success"
+            th:text="'Welcome admin: ' + ${session.userLogin.name}"/>
         <h3 class="mt-3 mb-3 text-center text-primary">CUSTOMER MANAGEMENT</h3>
         <span th:if="${message_customer != null}">
             <b><i><p style="font-size:1.6rem" class="text-danger text-center" th:text="${message_customer}"/></i></b>
         </span>
 
 
-        <table class="table table-bordered table-striped table-success">
-            <thead>
-            <tr class="text-center">
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Gender</th>
-                <th>Age</th>
-                <th>Points</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tr th:each="tmp :${customers}">
-                <td th:text="${tmp.id}" class="text-center"/>
-                <td th:text="${tmp.name}"/>
-                <td th:text="${tmp.email}"/>
-                <td th:text="${tmp.address}"/>
-                <td th:text="${tmp.gender == true} ? 'Male' : 'Female'"
-                    class="text-center"/>
-                <td th:text="${tmp.age}" class="text-center"/>
-                <td class="text-center" th:text="${tmp.points}"/>
-                <td class="text-center">
-                    <a th:href="@{/admin/customers/showFormUpdateCustomer(customerId=${tmp.id})}"
-                       class="btn btn-info">UPDATE</a>
-                    <a onclick="return confirm('Are you sure to delete?')"
-                            th:href="@{/admin/customers/delete(customerId=${tmp.id})}"
-                       class="btn btn-danger">DELETE</a>
-                </td>
-            </tr>
-        </table>
+            <table class="table table-bordered table-striped table-success">
+                <thead>
+                <tr class="text-center">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Points</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tr th:each="tmp :${customers}">
+                    <td th:text="${tmp.id}" class="text-center"/>
+                    <td th:text="${tmp.name}"/>
+                    <td th:text="${tmp.email}"/>
+                    <td th:text="${tmp.address}"/>
+                    <td th:text="${tmp.gender == true} ? 'Male' : 'Female'"
+                        class="text-center"/>
+                    <td th:text="${tmp.age}" class="text-center"/>
+                    <td class="text-center" th:text="${tmp.points}"/>
+                    <td class="text-center" th:text="${tmp.roleId}"/>
+                    <td class="text-center">
+                        <span th:if="${tmp.status}">
+                            <span class="text-success">Active</span>
+                        </span>
+                        <span th:unless="${tmp.status}">
+                            <span class="text-danger">Inactive</span>
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <a th:href="@{/admin/customers/showFormUpdateCustomer(customerId=${tmp.id})}"
+                           class="btn btn-info">UPDATE</a>
+                        <a onclick="return confirm('Are you sure to delete?')"
+                           th:href="@{/admin/customers/delete(customerId=${tmp.id})}"
+                           class="btn btn-danger">DELETE</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </span>
-</div>
+
 </body>
 
 </html>
