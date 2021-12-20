@@ -11,4 +11,6 @@ public interface OrderDetailService {
     public List<OrderDetail> getAllOrderDetailByOrderId(int id);
 
     public String saveOrderDetail(OrderDetail od);
+
+    public OrderDetail getOrderDetailById(int id);
 }

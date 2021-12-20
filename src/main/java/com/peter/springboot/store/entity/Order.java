@@ -2,6 +2,7 @@ package com.peter.springboot.store.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -12,9 +13,12 @@ public class Order {
     @Column(name = "order_id")
     private int id;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.REMOVE)
+    List<OrderDetail> orderDetails;
 
     @Column(name = "order_date")
     private Date orderDate;
@@ -49,6 +53,7 @@ public class Order {
     public int getId() {
         return id;
     }
+
 
     public void setId(int id) {
         this.id = id;
@@ -92,6 +97,14 @@ public class Order {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     @Override

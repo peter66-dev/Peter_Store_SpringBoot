@@ -1,6 +1,7 @@
 package com.peter.springboot.store.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -11,11 +12,9 @@ public class Product {
     @Column(name = "product_id")
     private int id;
 
-    //    @ManyToOne(fetch = FetchType.EAGER,
-//            cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
-//    @JoinColumn(name = "category_id")
-    @Column(name = "category_id")
-    private int categoryId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @Column(name = "product_name")
     private String productName;
@@ -32,12 +31,16 @@ public class Product {
     @Column(name = "status")
     private boolean status;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product",
+            cascade = CascadeType.REFRESH)
+    List<OrderDetail> orderDetails;
+
     public Product() {
     }
 
-    public Product(int id, int categoryId, String productName, int quantityInStock, double importPrice, double exportPrice, boolean status) {
+    public Product(int id, Category c, String productName, int quantityInStock, double importPrice, double exportPrice, boolean status) {
         this.id = id;
-        this.categoryId = categoryId;
+        this.category = c;
         this.productName = productName;
         this.quantityInStock = quantityInStock;
         this.importPrice = importPrice;
@@ -45,17 +48,17 @@ public class Product {
         this.status = status;
     }
 
-    public Product(int id, int categoryId, String productName, int quantityInStock, double importPrice, double exportPrice) {
+    public Product(int id, Category c, String productName, int quantityInStock, double importPrice, double exportPrice) {
         this.id = id;
-        this.categoryId = categoryId;
+        this.category = c;
         this.productName = productName;
         this.quantityInStock = quantityInStock;
         this.importPrice = importPrice;
         this.exportPrice = exportPrice;
     }
 
-    public Product(int categoryId, String productName, int quantityInStock, double importPrice, double exportPrice) {
-        this.categoryId = categoryId;
+    public Product(Category c, String productName, int quantityInStock, double importPrice, double exportPrice) {
+        this.category = c;
         this.productName = productName;
         this.quantityInStock = quantityInStock;
         this.importPrice = importPrice;
@@ -78,12 +81,12 @@ public class Product {
         this.id = id;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getProductName() {
@@ -118,11 +121,18 @@ public class Product {
         this.exportPrice = exportPrice;
     }
 
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", categoryId=" + categoryId +
                 ", productName='" + productName + '\'' +
                 ", quantityInStock=" + quantityInStock +
                 ", importPrice=" + importPrice +

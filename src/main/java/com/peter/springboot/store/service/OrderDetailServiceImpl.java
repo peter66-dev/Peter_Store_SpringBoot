@@ -31,4 +31,14 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         repo.save(od);
         return "Saving successfully! Order detail: " + od;
     }
+
+    @Override
+    public OrderDetail getOrderDetailById(int id) {
+        Optional<OrderDetail> o = repo.findById(id);
+        OrderDetail od = null;
+        if(o.isPresent()){
+            od = o.get();
+        }
+        return od;
+    }
 }

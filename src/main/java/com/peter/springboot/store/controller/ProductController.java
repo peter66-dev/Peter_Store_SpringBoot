@@ -74,7 +74,7 @@ public class ProductController {
                             + order.getOrderDate() + ", order id: " + order);
                 }
                 if (cart == null || cart.isEmpty()) {
-                    Product tmp = new Product(proInStock.getId(), proInStock.getCategoryId(),
+                    Product tmp = new Product(proInStock.getId(), proInStock.getCategory(),
                             proInStock.getProductName(), 0, proInStock.getImportPrice(), proInStock.getExportPrice());
                     cart = new ArrayList<Product>();
                     tmp.setQuantityInStock(1);
@@ -91,7 +91,7 @@ public class ProductController {
                         }
                     }
                     if (!check) {
-                        Product tmp = new Product(proInStock.getId(), proInStock.getCategoryId(),
+                        Product tmp = new Product(proInStock.getId(), proInStock.getCategory(),
                                 proInStock.getProductName(), 1, 0, proInStock.getExportPrice());
                         msg = "Adding a new book '" + tmp.getProductName() + "' for cart successfully!";
                         cart.add(tmp);

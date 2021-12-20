@@ -13,11 +13,11 @@ public class OrderDetail {
     @Column(name = "order_detail_id")
     private int id;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "order_id")
     private Order order;
 

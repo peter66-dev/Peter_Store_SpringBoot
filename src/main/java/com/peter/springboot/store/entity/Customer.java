@@ -1,6 +1,7 @@
 package com.peter.springboot.store.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -36,6 +37,9 @@ public class Customer {
 
     @Column(name = "status")
     private boolean status;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer",cascade = CascadeType.REFRESH)
+    private List<Order> orders;
 
     public Customer() {
     }
@@ -130,6 +134,14 @@ public class Customer {
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
