@@ -26,9 +26,10 @@
                 th:text="'Welcome admin: ' + ${session.userLogin.name}"/>
         </span>
     <div class="container">
+        <b><p style="font-size:1.6rem" th:text="'Total: ' + ${products.size()}"/></b>
         <form action="#" th:action="@{/admin/products/search}" method="GET"
               class="mt-2 mb-2 d-flex justify-content-center">
-            <input th:name="searchValue" type="text" placeholder="Search book ..." class="form-control"/>
+            <input th:name="searchValue" type="text" placeholder="Search book ..." class="form-control" required/>
             <button class="btn btn-primary">Search</button>
         </form>
 

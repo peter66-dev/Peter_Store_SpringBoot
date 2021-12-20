@@ -4,6 +4,7 @@ import com.peter.springboot.store.entity.Customer;
 import com.peter.springboot.store.entity.Order;
 import com.peter.springboot.store.entity.OrderDetail;
 import com.peter.springboot.store.entity.Product;
+import com.peter.springboot.store.service.CustomerService;
 import com.peter.springboot.store.service.OrderDetailService;
 import com.peter.springboot.store.service.OrderService;
 import com.peter.springboot.store.service.ProductService;
@@ -30,12 +31,16 @@ public class PayMoneyController {
     private ProductService proSer;
 
     @Autowired
+    private CustomerService cusSer;
+
+    @Autowired
     private OrderDetailService orderDetailSer;
 
-    public PayMoneyController(OrderService ss, ProductService p, OrderDetailService od) {
-        orSer = ss;
-        proSer = p;
-        orderDetailSer = od;
+    public PayMoneyController(OrderService ss, ProductService p, OrderDetailService od ,CustomerService cusSer) {
+        this.orSer = ss;
+        this.proSer = p;
+        this.orderDetailSer = od;
+        this.cusSer = cusSer;
     }
 
     @GetMapping("/paybill")
@@ -48,6 +53,10 @@ public class PayMoneyController {
             if (order != null && order.getCustomer().getRoleId().equals("User")) {
                 System.out.println("Checked user role!");
                 if (checkQuantity(cart).isEmpty()) {
+                    Customer customer = order.getCustomer();
+                    customer.setPoints(customer.getPoints() + 1);
+                    cusSer.saveCustomer(customer);
+
                     order.setStatus(true);
                     double discount = Math.random() / 2;
                     order.setDiscount((float)(Math.round((float)discount * 100.0) / 100.0));
@@ -69,6 +78,9 @@ public class PayMoneyController {
                     proSer.setStatusProductQuantity();
 
                     cart.removeAll(cart);
+                    session.removeAttribute("cart");
+                    session.removeAttribute("order");
+                    session.removeAttribute("total");
                     model.addAttribute("products", proSer.getAllProducts());
                     model.addAttribute("message_store","Thank you for supporting my small business!");
                 } else {

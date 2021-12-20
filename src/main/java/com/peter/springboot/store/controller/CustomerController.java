@@ -1,6 +1,7 @@
 package com.peter.springboot.store.controller;
 
 import com.peter.springboot.store.entity.Customer;
+import com.peter.springboot.store.entity.Product;
 import com.peter.springboot.store.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -97,6 +98,27 @@ public class CustomerController {
             model.addAttribute("error_message", ex.getMessage());
         }
         model.addAttribute("customers", ser.getAllCustomers());
+        return url;
+    }
+
+    @GetMapping("/search")
+    public String searchCustomer(HttpServletRequest request, Model model,
+                                 @RequestParam("searchValue") String searchValue) {
+        String url = "admin/list-customers";
+        try {
+            HttpSession session = request.getSession();
+            Customer admin = (Customer) session.getAttribute("userLogin");
+            if (admin.getRoleId().equals("Admin")) {
+                List<Customer> list = ser.findByNameContaining(searchValue);
+                model.addAttribute("customers", list);
+            } else {
+                url = "error-page";
+                model.addAttribute("error_message", "Login with role admin before update product, please!");
+            }
+        } catch (Exception ex) {
+            url = "error-page";
+            model.addAttribute("error_message", ex.getMessage());
+        }
         return url;
     }
 

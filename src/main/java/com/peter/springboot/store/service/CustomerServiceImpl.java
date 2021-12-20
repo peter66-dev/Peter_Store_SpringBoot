@@ -28,6 +28,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<Customer> findByNameContaining(String searchValue) {
+        return repo.findByNameContaining(searchValue);
+    }
+
+    @Override
     public Customer getCustomer(int id) {
         Optional<Customer> o = repo.findById(id);
         if (o.isPresent()) {

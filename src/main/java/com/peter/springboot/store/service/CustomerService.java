@@ -10,6 +10,8 @@ public interface CustomerService {
 
     public List<Customer> getAllCustomersActive();
 
+    public List<Customer> findByNameContaining(String searchValue);
+
     public Customer getCustomer(int id);
 
     public void saveCustomer(Customer c);

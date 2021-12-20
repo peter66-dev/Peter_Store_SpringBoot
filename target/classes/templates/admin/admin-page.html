@@ -7,16 +7,22 @@
     <title>Admin page</title>
 </head>
 <body style="background-color:#ACEDE2">
-    <div class="d-flex justify-content-end">
-        <a style="margin-right:0.6rem" class="btn btn-primary mt-2 mb-2"
-           th:href="@{/logout}">Log out</a>
-    </div>
-    <h3 class="text-center text-success mt-2 mb-3">📚 ADMIN PETER STORE 📚</h3>
+<div class="d-flex justify-content-end">
+    <a style="margin-right:0.6rem" class="btn btn-primary mt-2 mb-2"
+       th:href="@{/logout}">Log out</a>
+</div>
+<h3 class="text-center text-success mt-2 mb-3">🛡️🔑️ ADMIN PETER STORE </h3>
+
+<div style="margin-top:5rem" class="d-flex justify-content-center">
     <div class="text-center">
-        <a style="margin-top:7rem" th:href="@{/admin/customers/list}" class="btn btn-success">Customer management</a>
+        <a style="margin-right:0.3rem" th:href="@{/admin/customers/list}" class="btn btn-success">Customer management</a>
     </div>
     <div class="text-center">
-        <a style="margin-top:7rem" th:href="@{/admin/products/list}" class="btn btn-danger">Product Management</a>
+        <a style="margin-right:0.3rem" th:href="@{/admin/products/list}" class="btn btn-danger">Product management</a>
     </div>
+    <div class="text-center">
+        <a th:href="@{/admin/orders/list}" class="btn btn-primary">Bill management</a>
+    </div>
+</div>
 </body>
 </html>

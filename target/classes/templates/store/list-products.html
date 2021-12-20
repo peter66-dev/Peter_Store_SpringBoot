@@ -32,7 +32,7 @@
     <h3 class="text-center text-info mt-2 mb-3">📚 PETER STORE 📚</h3>
 
     <form action="#" th:action="@{/store/search}" method="GET" class="mt-2 mb-2 d-flex justify-content-center">
-        <input th:name="searchValue" type="text" placeholder="Search book ..." class="form-control"/>
+        <input th:name="searchValue" type="text" placeholder="Search book ..." class="form-control" required/>
         <button class="btn btn-primary">Search</button>
     </form>
 
@@ -43,6 +43,7 @@
     <table class="table table-striped table-bordered" style="background-color: #C4F181">
         <thead class="text-center">
         <tr>
+            <th>ID</th>
             <th>Book name</th>
             <th>Quantity</th>
             <th>Price (VND)</th>
@@ -50,7 +51,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="pro : ${products}">
+        <tr th:each="pro, state : ${products}">
+            <td class="text-center" th:text="${state.count}"/>
             <td th:text="${pro.productName}"/>
             <td class="text-center" th:text="${pro.quantityInStock}"/>
             <td style="text-align:right" th:text="${pro.exportPrice}"/>
