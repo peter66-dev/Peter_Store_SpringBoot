@@ -36,6 +36,7 @@ public class Product {
     List<OrderDetail> orderDetails;
 
     public Product() {
+        status = true;
     }
 
     public Product(int id, Category c, String productName, int quantityInStock, double importPrice, double exportPrice, boolean status) {

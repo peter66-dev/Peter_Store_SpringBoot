@@ -61,12 +61,33 @@ public class ProductCRUDController {
         return url;
     }
 
+    @GetMapping("/showFormAddProduct")
+    public String showFormAddProduct(HttpServletRequest request, Model model) {
+        String url = "admin/form-product";
+        try {
+            HttpSession session = request.getSession();
+            Customer admin = (Customer) session.getAttribute("userLogin");
+            if (admin.getRoleId().equals("Admin")) {
+                Product pro = new Product();
+                model.addAttribute("product_update", pro);
+            } else {
+                url = "error-page";
+                model.addAttribute("error_message", "Login with role admin before update product, please!");
+            }
+        } catch (Exception ex) {
+            url = "error-page";
+            model.addAttribute("error_message", ex.getMessage());
+        }
+        return url;
+    }
+
     @PostMapping("/save")
     public String saveProduct(HttpServletRequest request, Model model, @ModelAttribute("product_update") Product product_update) {
         String url = "admin/check-products";
         try {
             HttpSession session = request.getSession();
             Customer admin = (Customer) session.getAttribute("userLogin");
+            int id = product_update.getId();
             if (admin.getRoleId().equals("Admin")) {
                 if (product_update.getImportPrice() < product_update.getExportPrice()) {
                     if (product_update.getQuantityInStock() <= 0) {
@@ -79,8 +100,14 @@ public class ProductCRUDController {
                         proSer.saveProduct(product_update);
                     }
                     model.addAttribute("products", proSer.getAllProducts());
-                    model.addAttribute("products_page_message",
-                            "Updated '" + product_update.getProductName() + "' successfully");
+                    if(id==0){
+                        model.addAttribute("products_page_message",
+                                "Updated '" + product_update.getProductName() + "' successfully");
+                    }
+                    else{
+                        model.addAttribute("products_page_message",
+                                "Created '" + product_update.getProductName() + "' successfully");
+                    }
                 } else {
                     url = "error-page";
                     model.addAttribute("error_message", "Import price must be less than export price!");

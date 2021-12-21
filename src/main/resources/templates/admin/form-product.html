@@ -8,40 +8,66 @@
     <title>Customer detail</title>
     <link th:href="@{/css/register.css}" rel="stylesheet"/>
 </head>
-<body>
+<body style="background-color:#F3CFD2">
 <div class="container-fluid">
     <h1 class="text-center">Product detail</h1>
     <p class="text-center">Please check product information carefully before save!</p>
     <hr>
     <form action="#" th:action="@{/admin/products/save}" method="POST" th:object="${product_update}">
         <input type="hidden" th:field="*{id}"/>
-        <div class="mb-3">
-            <label><b>Category ID</b></label>
-            <input type="number" th:field="*{category.id}" required>
-        </div>
         <div class="mb-3 row">
-            <label><b>Product name</b></label>
-            <input type="text" th:field="*{productName}" required>
+            <label class="col-12 col-sm-3 col-form-label"><b>Category name</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <select class="col-lg-5 form-select form-select-md mb-3" th:field="*{category.name}"
+                        aria-label=".form-select-md example">
+                    <option value="Kinh dị">Kinh dị</option>
+                    <option value="Ngôn tình">Ngôn tình</option>
+                    <option value="Lãng mạn">Lãng mạn</option>
+                    <option value="Khoa học">Khoa học</option>
+                    <option value="Nghệ thuật">Nghệ thuật</option>
+                    <option value="Cổ tích">Cổ tích</option>
+                    <option value="IT technology">IT technology</option>
+                    <option value="Trí tuệ">Trí tuệ</option>
+                    <option value="Sức khỏe">Sức khỏe</option>
+                </select>
+            </div>
         </div>
 
         <div class="mb-3 row">
-            <label><b>Quantity in stock</b></label>
-            <input type="number" th:field="*{quantityInStock}" required>
+            <label class="col-12 col-sm-3 col-form-label"><b>Product name</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{productName}" required
+                       type="text" aria-label=".form-control-md example"/>
+            </div>
         </div>
 
         <div class="mb-3 row">
-            <label><b>Import Price</b></label>
-            <input type="number" th:field="*{importPrice}" required>
+            <label class="col-12 col-sm-3 col-form-label"><b>Quantity in stock</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{quantityInStock}" required
+                       type="number" aria-label=".form-control-md example"/>
+            </div>
         </div>
 
         <div class="mb-3 row">
-            <label><b>Export Price</b></label>
-            <input type="number" th:field="*{exportPrice}" required>
+            <label class="col-12 col-sm-3 col-form-label"><b>Import Price</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{importPrice}" required
+                       type="number" aria-label=".form-control-md example"/>
+            </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3 row">
+            <label class="col-12 col-sm-3 col-form-label"><b>Export Price</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{exportPrice}" required
+                       type="number" aria-label=".form-control-md example"/>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Status</b></label>
-            <div class="col-12 col-sm-3 col-lg-3">
+            <div class="col-12 col-sm-4 col-lg-4">
                 <select class="col-lg-5 form-select form-select-md mb-3" th:field="*{status}"
                         aria-label=".form-select-md example">
                     <option value="true">Available</option>
@@ -49,10 +75,8 @@
                 </select>
             </div>
         </div>
-
         <hr>
-
-        <button type="submit" class="registerbtn">UPDATE</button>
+        <button type="submit" class="registerbtn">SAVE</button>
         <div class="container signin">
             <a th:href="@{/admin/products/list}">Back to product list.</a>
         </div>

@@ -26,6 +26,7 @@
                 th:text="'Welcome admin: ' + ${session.userLogin.name}"/>
         </span>
     <div class="container">
+        <a th:href="@{/admin/products/showFormAddProduct}" class="btn btn-warning">Add a new product</a>
         <b><p style="font-size:1.6rem" th:text="'Total: ' + ${products.size()}"/></b>
         <form action="#" th:action="@{/admin/products/search}" method="GET"
               class="mt-2 mb-2 d-flex justify-content-center">

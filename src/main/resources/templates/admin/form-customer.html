@@ -10,90 +10,112 @@
 </head>
 <body style="background-color:#C8FFF1">
 <div class="container-fluid">
-    <h1 class="text-center">Register form</h1>
+    <h1 class="text-center">Customer information</h1>
     <p class="text-center">Please fill in this form to create an account.</p>
     <hr>
     <form action="#" method="POST" th:action="@{/admin/customers/save}" th:object="${customer}">
         <input th:field="*{id}" type="hidden"/>
-        <div class="mb-3">
-            <label><b>Email</b></label>
-            <input placeholder="Enter email" required th:field="*{email}" type="text">
-        </div>
         <div class="mb-3 row">
-            <label><b>Name</b></label>
-            <input placeholder="Enter name" required th:field="*{name}" type="text">
-        </div>
-
-        <div class="mb-3 row">
-            <label><b>Address</b></label>
-            <input placeholder="Enter address" required th:field="*{address}" type="text">
+            <label class="col-12 col-sm-3 col-form-label"><b>Email</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{email}" required
+                       placeholder="Enter email" type="text" aria-label=".form-control-md example"/>
+            </div>
         </div>
 
         <div class="mb-3 row">
-            <label><b>Password</b></label>
-            <span th:if="${session.userLogin == null}">
-               <input placeholder="Enter password" required th:field="*{password}" type="password">
-            </span>
-            <span th:if="${session.userLogin != null}">
-                <span th:if="${session.userLogin.roleId == 'Admin'}">
-                    <input placeholder="Enter password" th:field="*{password}" type="text">
+            <label class="col-12 col-sm-3 col-form-label"><b>Name</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{name}" required
+                       placeholder="Enter name" type="text" aria-label=".form-control-md example"/>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label class="col-12 col-sm-3 col-form-label"><b>Address</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{address}" required
+                       placeholder="Enter address" type="text" aria-label=".form-control-md example"/>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label class="col-12 col-sm-3 col-form-label"><b>Password</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <span th:if="${session.userLogin == null}">
+                    <!--   Create thì hide password-->
+                    <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{password}" required
+                           placeholder="Enter password" type="password" aria-label=".form-control-md example"/>
                 </span>
+                <span th:if="${session.userLogin != null}">
+                    <span th:if="${session.userLogin.roleId == 'Admin'}">
+                        <!--   Update thì show password-->
+                        <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{password}" required
+                               placeholder="Enter password" type="text" aria-label=".form-control-md example"/>
+                    </span>
             </span>
+            </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Gender</b></label>
-            <div class="col-12 col-sm-3 col-lg-3">
-                <select aria-label=".form-select-md example" class="col-lg-5 form-select form-select-md mb-3"
-                        th:field="*{gender}">
-                    <option value="false">Female</option>
-                    <option value="true">Male</option>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <select class="col-lg-5 form-select form-select-md mb-3" th:field="*{gender}"
+                        aria-label=".form-select-md example">
+                    <option class="col-lg-5 form-control form-control-md mb-3" value="false">Female</option>
+                    <option class="col-lg-5 form-control form-control-md mb-3" value="true">Male</option>
                 </select>
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label class="col-xs-2 col-form-label"><b>Age</b></label>
-            <div class="col-xs-10">
-                <input class="form-control" placeholder="Enter age" required="" th:field="*{age}" type="number"/>
+            <label class="col-12 col-sm-3 col-form-label"><b>Age</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{age}" required
+                       placeholder="Enter age" type="number" aria-label=".form-control-md example"/>
             </div>
         </div>
 
-        <div class="form-group">
-            <label>Points</label>
-            <span th:if="${session.userLogin == null}">
-                <input class="form-control mb-3" readonly th:field="*{points}" type="number">
-            </span>
-            <span th:if="${session.userLogin != null}">
-                <span th:if="${session.userLogin.roleId == 'Admin'}">
-                    <input class="form-control mb-3" th:field="*{points}" type="number">
+        <div class="mb-3 row">
+            <label class="col-12 col-sm-3 col-form-label"><b>Points</b></label>
+            <div class="col-12 col-sm-4 col-lg-4">
+                <span th:if="${session.userLogin == null}">
+                    <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{points}" readonly
+                           placeholder="Enter age" type="number" aria-label=".form-control-md example"/>
                 </span>
-            </span>
+                <span th:if="${session.userLogin != null}">
+                    <span th:if="${session.userLogin.roleId == 'Admin'}">
+                        <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{points}"
+                               placeholder="Enter age" type="number" aria-label=".form-control-md example"/>
+                    </span>
+                </span>
+            </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Role name</b></label>
-            <div class="col-12 col-sm-3 col-lg-3">
-                <select aria-label=".form-select-md example" class="col-lg-5 form-select form-select-md mb-3"
-                        th:field="*{roleId}">
+            <div class="col-12 col-sm-4 col-lg-4">
+                <select class="col-lg-5 form-select form-select-md mb-3" th:field="*{roleId}"
+                        aria-label=".form-select-md example">
                     <option value="User">User</option>
                     <option value="Admin">Admin</option>
                 </select>
             </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Status</b></label>
-            <div class="col-12 col-sm-3 col-lg-3">
-                <select aria-label=".form-select-md example" class="col-lg-5 form-select form-select-md mb-3"
-                        th:field="*{status}">
+            <div class="col-12 col-sm-4 col-lg-4">
+                <select class="col-lg-5 form-select form-select-md mb-3" th:field="*{status}"
+                        aria-label=".form-select-md example">
                     <option value="true">Active</option>
                     <option value="false">Inactive</option>
                 </select>
             </div>
         </div>
+
         <hr>
-        <button class="registerbtn" type="submit">Register</button>
+        <button class="registerbtn" type="submit">SAVE</button>
         <div class="container signin">
             <p>Already have an account? <a th:href="@{/login}">Sign in</a>.</p>
         </div>
