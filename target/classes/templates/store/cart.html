@@ -67,9 +67,6 @@
                                class="btn btn-info">ADD</a>
                         </td>
                         <td class="text-center">
-<!--                            <a onclick="if(!confirm('Are you sure to delete product?')) return false;"-->
-<!--                               th:href="@{/products/deleteProductCart(productId=${book.id})}"-->
-<!--                               class="btn btn-danger">DELETE</a>-->
                             <a onclick="return confirm('Are you sure to delete product?')"
                                th:href="@{/store/deleteProductCart(productId=${book.id})}"
                                class="btn btn-danger">DELETE</a>
@@ -79,6 +76,9 @@
             </table>
             <div class="d-flex justify-content-end text-info">
                 <div style="margin-right:2rem">
+                    <h4 style="font-size:1.4rem; text-align:right" class="text-danger"
+                      th:text="'Discount: ' + ${session.order.getDiscount() * 100} + '%'"/>
+                    <hr>
                     <h3>
                         Total: <span th:text="${session.total}"/> VND
                     </h3>

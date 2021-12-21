@@ -58,10 +58,7 @@ public class PayMoneyController {
                     cusSer.saveCustomer(customer);
 
                     order.setStatus(true);
-                    double discount = Math.random() / 2;
-                    order.setDiscount((float)(Math.round((float)discount * 100.0) / 100.0));
-
-                    order.setTotal((Math.round((float)order.getTotal() * (1 - discount) * 100.0) / 100.0));
+                    order.setTotal((Math.round((float)order.getTotal() * (1 - order.getDiscount()) * 100.0) / 100.0));
                     orSer.saveOrder(order);
                     System.out.println("Saved order! Order info: " + order);
 

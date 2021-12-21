@@ -121,12 +121,12 @@ public class Product {
         this.exportPrice = exportPrice;
     }
 
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
-
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
     }
 
     @Override

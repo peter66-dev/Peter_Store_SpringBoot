@@ -70,6 +70,7 @@ public class ProductController {
                 if (order == null) {
                     Customer c = (Customer) session.getAttribute("userLogin");
                     order = new Order(c);
+                    order.setDiscount(); // random discount belong to points customer
                     System.out.println("Create new order successfully! Order date: "
                             + order.getOrderDate() + ", order id: " + order);
                 }
@@ -97,7 +98,7 @@ public class ProductController {
                         cart.add(tmp);
                     }
                 }
-                session.setAttribute("total", Math.round(total * 100.0) / 100.0);
+                session.setAttribute("total", Math.round(total * (1 - order.getDiscount()) * 100.0) / 100.0);
                 order.setTotal(total);
                 session.setAttribute("order", order);
                 session.setAttribute("cart", cart);
@@ -117,14 +118,17 @@ public class ProductController {
             HttpSession session = request.getSession();
             Customer userLogin = (Customer) session.getAttribute("userLogin");
             ArrayList<Product> cart = (ArrayList<Product>) session.getAttribute("cart");
+            Order order = (Order) session.getAttribute("order");
             if (userLogin != null && userLogin.getRoleId().equals("User")) {
                 double total = 0;
-                if(!cart.isEmpty()){
+                if (!cart.isEmpty()) {
                     for (Product p : cart) {
                         total += p.getQuantityInStock() * p.getExportPrice();
                     }
                 }
-                session.setAttribute("total", total);
+                if (order != null) {
+                    session.setAttribute("total", Math.round(total * (1 - order.getDiscount()) * 100.0) / 100.0);
+                }
             } else {
                 model.addAttribute("message_store",
                         "Please create or login with user account!");
@@ -166,7 +170,7 @@ public class ProductController {
                 msg = "Subtracting -1 '" + proName + "' successfully!";
             }
             session.setAttribute("cart", cart);
-            session.setAttribute("total", getTotal(cart));
+            session.setAttribute("total", Math.round(getTotal(cart) * (1 - order.getDiscount()) * 100.0) / 100.0);
             order.setTotal(getTotal(cart));
             session.setAttribute("order", order);
             model.addAttribute("message_cart", msg);
@@ -199,7 +203,7 @@ public class ProductController {
                 }
                 total += p.getQuantityInStock() * p.getExportPrice();
             }
-            session.setAttribute("total", total);
+            session.setAttribute("total", Math.round(total * (1 - order.getDiscount()) * 100.0) / 100.0);
             session.setAttribute("cart", cart);
             order.setTotal(getTotal(cart));
             session.setAttribute("order", order);
@@ -230,7 +234,7 @@ public class ProductController {
             cart.remove(tmp);
             model.addAttribute("message_cart", msg);
             session.setAttribute("cart", cart);
-            session.setAttribute("total", getTotal(cart));
+            session.setAttribute("total", Math.round(getTotal(cart) * (1 - order.getDiscount()) * 100.0) / 100.0);
             order.setTotal(getTotal(cart));
             session.setAttribute("order", order);
         } catch (Exception ex) {

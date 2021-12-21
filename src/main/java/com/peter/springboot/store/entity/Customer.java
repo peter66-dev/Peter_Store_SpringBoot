@@ -56,6 +56,10 @@ public class Customer {
         this.status = status;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     public boolean isStatus() {
         return status;
     }
@@ -134,10 +138,6 @@ public class Customer {
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
     }
 
     public void setOrders(List<Order> orders) {

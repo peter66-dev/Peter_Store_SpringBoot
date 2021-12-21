@@ -54,7 +54,6 @@ public class Order {
         return id;
     }
 
-
     public void setId(int id) {
         this.id = id;
     }
@@ -83,6 +82,32 @@ public class Order {
         this.discount = discount;
     }
 
+    public void setDiscount() {
+        float result = 0f;
+        float target = 0f;
+        int pointsCustomer = this.customer.getPoints();
+        while (true) {
+            result = (float) Math.random();
+            if (pointsCustomer >= 0) {
+                target = 0.1f;
+            } else if (pointsCustomer >= 20) {
+                target = 0.2f;
+            } else if (pointsCustomer >= 40) {
+                target = 0.3f;
+            } else if (pointsCustomer >= 60) {
+                target = 0.4f;
+            } else if (pointsCustomer >= 80 && pointsCustomer < 100) {
+                target = 0.5f;
+            } else {
+                target = 0.6f;
+            }
+            if (result <= target) {
+                this.discount = (float)(Math.round((float)result * 100.0) / 100.0);
+                break;
+            }
+        }
+    }
+
     public double getTotal() {
         return total;
     }
@@ -99,12 +124,12 @@ public class Order {
         this.status = status;
     }
 
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
-
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
     }
 
     @Override
