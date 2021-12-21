@@ -102,9 +102,6 @@
                         <td class="text-center">
                             <a th:href="@{/admin/bills/showOrderDetails(orderId=${tmp.id})}"
                                class="btn btn-info">DETAILS</a>
-                            <a onclick="return confirm('Are you sure to delete?')"
-                               th:href="@{/admin/customers/deleteBill(orderId=${tmp.id})}"
-                               class="btn btn-danger">DELETE</a>
                         </td>
                     </tr>
                 </table>
