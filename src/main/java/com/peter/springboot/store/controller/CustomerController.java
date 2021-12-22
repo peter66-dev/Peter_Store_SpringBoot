@@ -1,7 +1,6 @@
 package com.peter.springboot.store.controller;
 
 import com.peter.springboot.store.entity.Customer;
-import com.peter.springboot.store.entity.Product;
 import com.peter.springboot.store.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +14,7 @@ import java.util.List;
 @RequestMapping("/admin/customers")
 public class CustomerController {
 
-    private CustomerService ser;
+    private final CustomerService ser;
 
     // 1 constructor nên ko cần dùng @Autowired
     public CustomerController(CustomerService s) {

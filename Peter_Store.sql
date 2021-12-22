@@ -69,7 +69,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (12,'vanphuong@gmail.com','1','Võ Văn Phương','Bùi Quang Là TPHCM',_binary '',20,1,'Admin',_binary ''),(13,'trieumy@gmail.com','1','Triều My','Đình Quới An',_binary '\0',21,10,'User',_binary ''),(15,'kimkieu@gmail.com','1','Kim Kiều','Gò Vấp',_binary '\0',26,10,'User',_binary '');
+INSERT INTO `customers` VALUES (12,'vanphuong@gmail.com','1','Võ Văn Phương','Bùi Quang Là TPHCM',_binary '',20,1,'Admin',_binary ''),(13,'trieumy@gmail.com','1','Triều My','Đình Quới An',_binary '\0',21,14,'User',_binary ''),(15,'kimkieu@gmail.com','1','Kim Kiều','Gò Vấp',_binary '\0',26,10,'User',_binary '');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +91,7 @@ CREATE TABLE `order_details` (
   KEY `fk_order_details_orders1_idx` (`order_id`),
   CONSTRAINT `fk_order_details_orders1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
   CONSTRAINT `fk_order_details_products1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `order_details` (
 
 LOCK TABLES `order_details` WRITE;
 /*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
-INSERT INTO `order_details` VALUES (1,1,11,1,40000),(2,1,12,1,40000),(3,1,13,1,40000),(4,1,14,1,40000),(5,3,15,2,100000),(6,2,16,1,120000),(7,1,17,10,400000),(8,4,18,5,3000000),(9,5,19,2,240000),(10,6,20,2,280000),(11,14,21,2,240000),(12,63,22,1,120000),(13,40,23,2,100000),(14,1,24,2,100000),(15,1,25,2,100000),(16,7,26,2,100000),(17,8,26,2,140000),(18,12,27,2,100000),(19,77,28,2,100000);
+INSERT INTO `order_details` VALUES (1,1,11,1,40000),(2,1,12,1,40000),(3,1,13,1,40000),(4,1,14,1,40000),(5,3,15,2,100000),(6,2,16,1,120000),(7,1,17,10,400000),(8,4,18,5,3000000),(9,5,19,2,240000),(10,6,20,2,280000),(11,14,21,2,240000),(12,63,22,1,120000),(13,40,23,2,100000),(14,1,24,2,100000),(15,1,25,2,100000),(16,7,26,2,100000),(17,8,26,2,140000),(18,12,27,2,100000),(19,77,28,2,100000),(20,75,29,2,100000),(21,1,30,2,100000),(22,1,31,2,100000),(23,1,32,8,400000);
 /*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,7 +121,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`order_id`),
   KEY `fk_orders_customers_idx` (`customer_id`),
   CONSTRAINT `fk_orders_customers` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,13,'2021-12-19 00:00:00',0.3,57844.83,_binary ''),(2,13,'2021-12-19 00:00:00',0.21,57844.83,_binary ''),(5,15,'2021-12-19 00:00:00',0.25,57844.83,_binary ''),(6,15,'2021-12-19 00:00:00',0.44,57844.83,_binary ''),(7,15,'2021-12-19 00:00:00',0.33,57844.83,_binary ''),(8,13,'2021-12-19 00:00:00',0.3,57844.83,_binary ''),(9,15,'2021-12-19 14:08:18',0.16,57844.83,_binary ''),(10,15,'2021-12-19 14:17:38',0.09,57844.83,_binary ''),(11,13,'2021-12-19 14:20:02',0.09,57844.83,_binary ''),(12,13,'2021-12-19 14:22:36',0.13,57844.83,_binary ''),(13,15,'2021-12-19 14:36:14',0.11,57844.83,_binary ''),(14,15,'2021-12-20 02:10:49',0.14,57844.83,_binary ''),(15,13,'2021-12-20 02:12:09',0.29,71472.33,_binary ''),(16,13,'2021-12-20 02:17:21',0.02,57844.83,_binary ''),(17,13,'2021-12-20 04:22:10',0.33,266538.29,_binary ''),(18,15,'2021-12-20 07:12:38',0.04,57844.83,_binary ''),(19,15,'2021-12-20 07:16:34',0.04,230650.14,_binary ''),(20,15,'2021-12-20 07:16:46',0.32,190087.27,_binary ''),(21,15,'2021-12-20 07:17:04',0.2,192685.78,_binary ''),(22,15,'2021-12-20 07:18:11',0.25,57844.83,_binary ''),(23,13,'2021-12-20 07:19:19',0.42,57844.83,_binary ''),(24,13,'2021-12-20 07:19:43',0.1,90063.23,_binary ''),(25,13,'2021-12-20 07:20:02',0.41,58735.39,_binary ''),(26,13,'2021-12-21 04:22:06',0.43,136851.99,_binary ''),(27,15,'2021-12-21 04:54:06',0.2,79540.12,_binary ''),(28,13,'2021-12-21 04:55:25',0.09,91000,_binary '');
+INSERT INTO `orders` VALUES (11,13,'2021-12-19 14:20:02',0.09,57844.83,_binary ''),(12,13,'2021-12-19 14:22:36',0.13,57844.83,_binary ''),(13,15,'2021-12-19 14:36:14',0.11,57844.83,_binary ''),(14,15,'2021-12-20 02:10:49',0.14,57844.83,_binary ''),(15,13,'2021-12-20 02:12:09',0.29,71472.33,_binary ''),(16,13,'2021-12-20 02:17:21',0.02,57844.83,_binary ''),(17,13,'2021-12-20 04:22:10',0.33,266538.29,_binary ''),(18,15,'2021-12-20 07:12:38',0.04,57844.83,_binary ''),(19,15,'2021-12-20 07:16:34',0.04,230650.14,_binary ''),(20,15,'2021-12-20 07:16:46',0.32,190087.27,_binary ''),(21,15,'2021-12-20 07:17:04',0.2,192685.78,_binary ''),(22,15,'2021-12-20 07:18:11',0.25,57844.83,_binary ''),(23,13,'2021-12-20 07:19:19',0.42,57844.83,_binary ''),(24,13,'2021-12-20 07:19:43',0.1,90063.23,_binary ''),(25,13,'2021-12-20 07:20:02',0.41,58735.39,_binary ''),(26,13,'2021-12-21 04:22:06',0.43,136851.99,_binary ''),(27,15,'2021-12-21 04:54:06',0.2,79540.12,_binary ''),(28,13,'2021-12-21 04:55:25',0.09,91000,_binary ''),(29,13,'2021-12-22 03:47:31',0.06,94000,_binary ''),(30,13,'2021-12-22 03:48:48',0.08,92000,_binary ''),(31,13,'2021-12-22 03:56:14',0.1,90000,_binary ''),(32,13,'2021-12-22 03:57:21',0.07,372000,_binary ''),(33,13,'2021-12-22 04:16:32',0.07,50000,_binary '\0');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,4 +182,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-21 20:49:20
+-- Dump completed on 2021-12-22 11:42:09

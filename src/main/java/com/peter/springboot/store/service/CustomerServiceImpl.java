@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private CustomerRepository repo;
+    private final CustomerRepository repo;
 
     // 1 constructor nên ko cần dùng @Autowired
     public CustomerServiceImpl(CustomerRepository r) {

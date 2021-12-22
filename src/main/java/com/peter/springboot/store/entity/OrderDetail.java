@@ -1,7 +1,5 @@
 package com.peter.springboot.store.entity;
 
-import org.hibernate.engine.internal.Cascade;
-
 import javax.persistence.*;
 
 @Entity

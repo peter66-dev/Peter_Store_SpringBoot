@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/admin/products")
 public class ProductCRUDController {
 
-    private ProductService proSer;
+    private final ProductService proSer;
 
     public ProductCRUDController(ProductService proSer) {
         this.proSer = proSer;
@@ -94,19 +94,17 @@ public class ProductCRUDController {
                         product_update.setQuantityInStock(0);
                         product_update.setStatus(false);
                         proSer.saveProduct(product_update);
-                    }
-                    else{
+                    } else {
                         product_update.setStatus(true);
                         proSer.saveProduct(product_update);
                     }
                     model.addAttribute("products", proSer.getAllProducts());
-                    if(id==0){
-                        model.addAttribute("products_page_message",
-                                "Updated '" + product_update.getProductName() + "' successfully");
-                    }
-                    else{
+                    if (id == 0) {
                         model.addAttribute("products_page_message",
                                 "Created '" + product_update.getProductName() + "' successfully");
+                    } else {
+                        model.addAttribute("products_page_message",
+                                "Updated '" + product_update.getProductName() + "' successfully");
                     }
                 } else {
                     url = "error-page";
@@ -157,9 +155,9 @@ public class ProductCRUDController {
             Customer admin = (Customer) session.getAttribute("userLogin");
             if (admin.getRoleId().equals("Admin")) {
                 List<Product> list = proSer.findByProductNameContaining(searchValue);
-                if(list.isEmpty()){
+                if (list.isEmpty()) {
                     model.addAttribute("products_page_message", "Can not find this product!");
-                }else{
+                } else {
                     model.addAttribute("products", list);
                 }
             } else {

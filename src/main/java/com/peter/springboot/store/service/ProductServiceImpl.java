@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository repo;
+    private final ProductRepository repo;
 
     public ProductServiceImpl(ProductRepository repo) {
         this.repo = repo;
@@ -55,8 +55,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void setStatusProductQuantity() {
         List<Product> list = repo.findAll();
-        for (Product p: list) {
-            if(p.getQuantityInStock() <= 0){
+        for (Product p : list) {
+            if (p.getQuantityInStock() <= 0) {
                 p.setStatus(false);
                 repo.save(p);
             }

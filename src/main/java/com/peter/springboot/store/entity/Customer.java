@@ -38,7 +38,7 @@ public class Customer {
     @Column(name = "status")
     private boolean status;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer",cascade = CascadeType.REFRESH)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.REFRESH)
     private List<Order> orders;
 
     public Customer() {
@@ -58,6 +58,10 @@ public class Customer {
 
     public List<Order> getOrders() {
         return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public boolean isStatus() {
@@ -120,6 +124,10 @@ public class Customer {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public int getPoints() {
         return points;
     }
@@ -128,20 +136,12 @@ public class Customer {
         this.points = points;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRoleId() {
         return roleId;
     }
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
     @Override

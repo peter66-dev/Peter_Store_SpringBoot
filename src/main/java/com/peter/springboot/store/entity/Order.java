@@ -8,18 +8,15 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.REMOVE)
+    List<OrderDetail> orderDetails;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private int id;
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.REMOVE)
-    List<OrderDetail> orderDetails;
-
     @Column(name = "order_date")
     private Date orderDate;
 
@@ -102,7 +99,7 @@ public class Order {
                 target = 0.6f;
             }
             if (result <= target) {
-                this.discount = (float)(Math.round((float)result * 100.0) / 100.0);
+                this.discount = (float) (Math.round(result * 100.0) / 100.0);
                 break;
             }
         }
@@ -124,12 +121,12 @@ public class Order {
         this.status = status;
     }
 
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
     public List<OrderDetail> getOrderDetails() {
         return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     @Override

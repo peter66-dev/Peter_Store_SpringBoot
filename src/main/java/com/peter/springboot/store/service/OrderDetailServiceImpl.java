@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
 
-    private OrderDetailRepository repo;
+    private final OrderDetailRepository repo;
 
     public OrderDetailServiceImpl(OrderDetailRepository r) {
         repo = r;
@@ -36,7 +36,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public OrderDetail getOrderDetailById(int id) {
         Optional<OrderDetail> o = repo.findById(id);
         OrderDetail od = null;
-        if(o.isPresent()){
+        if (o.isPresent()) {
             od = o.get();
         }
         return od;

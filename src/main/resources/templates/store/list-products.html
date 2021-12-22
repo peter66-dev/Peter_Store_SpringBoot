@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"
+          rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
     <title>Product page</title>
 </head>
 <body style="background-color: #BBF2F8">
@@ -15,14 +15,14 @@
 <span th:if="${session.userLogin != null}">
         <div class="d-flex justify-content-end mt-2 mb-2">
             <span th:if="${session.userLogin.roleId == 'User'}">
-                <a style="margin-right:0.5rem" class="btn btn-info"
+                <a class="btn btn-info" style="margin-right:0.5rem"
                    th:href="@{/store/showCart}">View cart</a>
             </span>
-            <a style="margin-right:0.5rem" class="btn btn-primary"
+            <a class="btn btn-primary" style="margin-right:0.5rem"
                th:href="@{/logout}">Log out</a>
         </div>
 <span th:if="${session.userLogin == null}">
-         <a style="margin-right:0.6rem" class="btn btn-info mt-2 mb-2"
+         <a class="btn btn-info mt-2 mb-2" style="margin-right:0.6rem"
             th:href="@{/login}">Log in</a>
     </span>
 </span>
@@ -31,8 +31,8 @@
 
     <h3 class="text-center text-info mt-2 mb-3">📚 PETER STORE 📚</h3>
 
-    <form action="#" th:action="@{/store/search}" method="GET" class="mt-2 mb-2 d-flex justify-content-center">
-        <input th:name="searchValue" type="text" placeholder="Search book ..." class="form-control" required/>
+    <form action="#" class="mt-2 mb-2 d-flex justify-content-center" method="GET" th:action="@{/store/search}">
+        <input class="form-control" placeholder="Search book ..." required th:name="searchValue" type="text"/>
         <button class="btn btn-primary">Search</button>
     </form>
 
@@ -56,10 +56,16 @@
             <td th:text="${pro.productName}"/>
             <td class="text-center" th:text="${pro.quantityInStock}"/>
             <td style="text-align:right" th:text="${pro.exportPrice}"/>
-            <td class="text-center">
-                <a th:href="@{/store/addToCart(productId=${pro.id})}"
-                   class="btn btn-info">Add
-                </a>
+            <td class="text-center" style="width:20%">
+                <form action="#" method="GET" th:action="@{/store/addToCart}">
+                    <input th:name="productId" th:value="${pro.id}" type="hidden"/>
+                    <input min="0" style="width:30%;text-align:center" th:name="quantityBuy" th:value="0"
+                           type="number"/>
+                    <button class="btn btn-info" type="submit">Add</button>
+                </form>
+                <!--                <a th:href="@{/store/addToCart(productId=${pro.id})}"-->
+                <!--                        class="btn btn-info">Add-->
+                <!--                </a>-->
             </td>
         </tr>
         </tbody>

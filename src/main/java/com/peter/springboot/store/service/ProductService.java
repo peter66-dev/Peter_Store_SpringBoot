@@ -6,18 +6,18 @@ import java.util.List;
 
 public interface ProductService {
 
-    public List<Product> getAllProducts();
+    List<Product> getAllProducts();
 
-    public List<Product> findByStatusTrue();
+    List<Product> findByStatusTrue();
 
-    public List<Product> findByProductNameContaining(String productName);
+    List<Product> findByProductNameContaining(String productName);
 
-    public Product getProductById(int id);
+    Product getProductById(int id);
 
-    public void saveProduct(Product pro);
+    void saveProduct(Product pro);
 
-    public void deleteProduct(int id);
+    void deleteProduct(int id);
 
-    public void setStatusProductQuantity();
+    void setStatusProductQuantity();
 
 }

@@ -3,21 +3,18 @@ package com.peter.springboot.store.controller;
 import com.peter.springboot.store.entity.Customer;
 import com.peter.springboot.store.entity.Order;
 import com.peter.springboot.store.entity.OrderDetail;
-import com.peter.springboot.store.entity.Product;
 import com.peter.springboot.store.service.OrderDetailService;
 import com.peter.springboot.store.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +23,10 @@ import java.util.List;
 public class BillController {
 
     @Autowired
-    private OrderService orSer;
+    private final OrderService orSer;
 
     @Autowired
-    private OrderDetailService odSer;
+    private final OrderDetailService odSer;
 
     public BillController(OrderService orSer, OrderDetailService odSer) {
         this.orSer = orSer;
@@ -43,7 +40,7 @@ public class BillController {
             HttpSession session = request.getSession();
             Customer admin = (Customer) session.getAttribute("userLogin");
             if (admin.getRoleId().equals("Admin")) {
-                List<Order> list = orSer.getAllOrders();
+                List<Order> list = orSer.findByStatusTrueOrderByOrderDateDesc();
                 model.addAttribute("bills", list);
                 model.addAttribute("importPrice", (float) (Math.round((float) getImportPriceByOrderList(list) * 100.0) / 100.0));
                 model.addAttribute("exportPrice", (float) (Math.round((float) getExportPriceByOrderList(list) * 100.0) / 100.0));
@@ -123,8 +120,7 @@ public class BillController {
                 Date dStart = f.parse(start + " 00:00:00");
                 Date dEnd = f.parse(end + " 23:59:59");
                 if (start.compareTo(end) > 0) { // start > end
-                    url = "error-page";
-                    model.addAttribute("error_message", "Sorry, time is not valid to statistic!");
+                    model.addAttribute("message_bill", "Sorry, time is not valid to statistic!");
                 } else {
                     List<Order> list = orSer.getOrderBetweenDate(dStart, dEnd);
                     model.addAttribute("bills", list);

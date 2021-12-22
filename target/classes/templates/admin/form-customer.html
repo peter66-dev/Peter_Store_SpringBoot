@@ -18,24 +18,27 @@
         <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Email</b></label>
             <div class="col-12 col-sm-4 col-lg-4">
-                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{email}" required
-                       placeholder="Enter email" type="text" aria-label=".form-control-md example"/>
+                <input aria-label=".form-control-md example" class="col-lg-5 form-control form-control-md mb-3"
+                       placeholder="Enter email"
+                       required th:field="*{email}" type="text"/>
             </div>
         </div>
 
         <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Name</b></label>
             <div class="col-12 col-sm-4 col-lg-4">
-                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{name}" required
-                       placeholder="Enter name" type="text" aria-label=".form-control-md example"/>
+                <input aria-label=".form-control-md example" class="col-lg-5 form-control form-control-md mb-3"
+                       placeholder="Enter name"
+                       required th:field="*{name}" type="text"/>
             </div>
         </div>
 
         <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Address</b></label>
             <div class="col-12 col-sm-4 col-lg-4">
-                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{address}" required
-                       placeholder="Enter address" type="text" aria-label=".form-control-md example"/>
+                <input aria-label=".form-control-md example" class="col-lg-5 form-control form-control-md mb-3"
+                       placeholder="Enter address"
+                       required th:field="*{address}" type="text"/>
             </div>
         </div>
 
@@ -44,14 +47,16 @@
             <div class="col-12 col-sm-4 col-lg-4">
                 <span th:if="${session.userLogin == null}">
                     <!--   Create thì hide password-->
-                    <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{password}" required
-                           placeholder="Enter password" type="password" aria-label=".form-control-md example"/>
+                    <input aria-label=".form-control-md example" class="col-lg-5 form-control form-control-md mb-3"
+                           placeholder="Enter password"
+                           required th:field="*{password}" type="password"/>
                 </span>
                 <span th:if="${session.userLogin != null}">
                     <span th:if="${session.userLogin.roleId == 'Admin'}">
                         <!--   Update thì show password-->
-                        <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{password}" required
-                               placeholder="Enter password" type="text" aria-label=".form-control-md example"/>
+                        <input aria-label=".form-control-md example" class="col-lg-5 form-control form-control-md mb-3"
+                               placeholder="Enter password"
+                               required th:field="*{password}" type="text"/>
                     </span>
             </span>
             </div>
@@ -60,8 +65,8 @@
         <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Gender</b></label>
             <div class="col-12 col-sm-4 col-lg-4">
-                <select class="col-lg-5 form-select form-select-md mb-3" th:field="*{gender}"
-                        aria-label=".form-select-md example">
+                <select aria-label=".form-select-md example" class="col-lg-5 form-select form-select-md mb-3"
+                        th:field="*{gender}">
                     <option class="col-lg-5 form-control form-control-md mb-3" value="false">Female</option>
                     <option class="col-lg-5 form-control form-control-md mb-3" value="true">Male</option>
                 </select>
@@ -71,8 +76,9 @@
         <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Age</b></label>
             <div class="col-12 col-sm-4 col-lg-4">
-                <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{age}" required
-                       placeholder="Enter age" type="number" aria-label=".form-control-md example"/>
+                <input aria-label=".form-control-md example" class="col-lg-5 form-control form-control-md mb-3"
+                       placeholder="Enter age"
+                       required th:field="*{age}" type="number"/>
             </div>
         </div>
 
@@ -80,13 +86,14 @@
             <label class="col-12 col-sm-3 col-form-label"><b>Points</b></label>
             <div class="col-12 col-sm-4 col-lg-4">
                 <span th:if="${session.userLogin == null}">
-                    <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{points}" readonly
-                           placeholder="Enter age" type="number" aria-label=".form-control-md example"/>
+                    <input aria-label=".form-control-md example" class="col-lg-5 form-control form-control-md mb-3"
+                           placeholder="Enter age"
+                           readonly th:field="*{points}" type="number"/>
                 </span>
                 <span th:if="${session.userLogin != null}">
                     <span th:if="${session.userLogin.roleId == 'Admin'}">
-                        <input class="col-lg-5 form-control form-control-md mb-3" th:field="*{points}"
-                               placeholder="Enter age" type="number" aria-label=".form-control-md example"/>
+                        <input aria-label=".form-control-md example" class="col-lg-5 form-control form-control-md mb-3"
+                               placeholder="Enter age" th:field="*{points}" type="number"/>
                     </span>
                 </span>
             </div>
@@ -95,8 +102,8 @@
         <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Role name</b></label>
             <div class="col-12 col-sm-4 col-lg-4">
-                <select class="col-lg-5 form-select form-select-md mb-3" th:field="*{roleId}"
-                        aria-label=".form-select-md example">
+                <select aria-label=".form-select-md example" class="col-lg-5 form-select form-select-md mb-3"
+                        th:field="*{roleId}">
                     <option value="User">User</option>
                     <option value="Admin">Admin</option>
                 </select>
@@ -106,8 +113,8 @@
         <div class="mb-3 row">
             <label class="col-12 col-sm-3 col-form-label"><b>Status</b></label>
             <div class="col-12 col-sm-4 col-lg-4">
-                <select class="col-lg-5 form-select form-select-md mb-3" th:field="*{status}"
-                        aria-label=".form-select-md example">
+                <select aria-label=".form-select-md example" class="col-lg-5 form-select form-select-md mb-3"
+                        th:field="*{status}">
                     <option value="true">Active</option>
                     <option value="false">Inactive</option>
                 </select>

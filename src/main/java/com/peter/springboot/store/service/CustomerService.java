@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface CustomerService {
 
-    public List<Customer> getAllCustomers();
+    List<Customer> getAllCustomers();
 
-    public List<Customer> getAllCustomersActive();
+    List<Customer> getAllCustomersActive();
 
-    public List<Customer> findByNameContaining(String searchValue);
+    List<Customer> findByNameContaining(String searchValue);
 
-    public Customer getCustomer(int id);
+    Customer getCustomer(int id);
 
-    public void saveCustomer(Customer c);
+    void saveCustomer(Customer c);
 
-    public void deleteCustomer(int id);
+    void deleteCustomer(int id);
 
-    public Customer checkLogin(String email, String password);
+    Customer checkLogin(String email, String password);
 }

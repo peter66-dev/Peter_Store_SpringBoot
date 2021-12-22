@@ -21,10 +21,10 @@ import java.util.List;
 public class LoginController {
 
     @Autowired
-    private CustomerService cusSer;
+    private final CustomerService cusSer;
 
     @Autowired
-    private ProductService proSer;
+    private final ProductService proSer;
 
     public LoginController(CustomerService c, ProductService p) {
         cusSer = c;
@@ -51,18 +51,18 @@ public class LoginController {
         if (c != null) {
             HttpSession session = request.getSession();
             session.setAttribute("userLogin", c);
-            if(c.isStatus()){
+            if (c.isStatus()) {
                 if (c.getRoleId().equals("Admin")) {
                     url = "admin/admin-page";
-                } else if(c.getRoleId().equals("User")) { // User role
+                } else if (c.getRoleId().equals("User")) { // User role
                     List<Product> list = proSer.findByStatusTrue();
                     url = "store/list-products";
                     model.addAttribute("products", list);
-                }else{
+                } else {
                     url = "error-page";
-                    model.addAttribute("error_message","Your role is not supported! Create a new account please!");
+                    model.addAttribute("error_message", "Your role is not supported! Create a new account please!");
                 }
-            }else{
+            } else {
                 model.addAttribute("LOGIN_MESSAGE",
                         "Your account is blocked, contact with admin to give more information. Email admin: vanphuong0606@gmail.com");
             }
@@ -75,7 +75,7 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request){
+    public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();
         return "redirect:/login";

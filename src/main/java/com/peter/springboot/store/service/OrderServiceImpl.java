@@ -4,7 +4,6 @@ import com.peter.springboot.store.dao.OrderRepository;
 import com.peter.springboot.store.entity.Order;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +11,7 @@ import java.util.Optional;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository repo;
+    private final OrderRepository repo;
 
     public OrderServiceImpl(OrderRepository r) {
         repo = r;
@@ -45,6 +44,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOrderBetweenDate(Date start, Date end) {
-        return repo.findByOrderDateBetween(start, end);
+        return repo.findByOrderDateBetweenAndStatusTrueOrderByOrderDateDesc(start, end);
+    }
+
+    @Override
+    public List<Order> findByStatusTrueOrderByOrderDateDesc() {
+        return repo.findByStatusTrueOrderByOrderDateDesc();
     }
 }

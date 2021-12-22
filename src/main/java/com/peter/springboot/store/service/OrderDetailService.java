@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface OrderDetailService {
 
-    public List<OrderDetail> getAllOrderDetail();
+    List<OrderDetail> getAllOrderDetail();
 
-    public List<OrderDetail> getAllOrderDetailByOrderId(int id);
+    List<OrderDetail> getAllOrderDetailByOrderId(int id);
 
-    public String saveOrderDetail(OrderDetail od);
+    String saveOrderDetail(OrderDetail od);
 
-    public OrderDetail getOrderDetailById(int id);
+    OrderDetail getOrderDetailById(int id);
 }

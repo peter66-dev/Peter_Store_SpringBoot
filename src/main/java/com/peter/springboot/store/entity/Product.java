@@ -7,33 +7,26 @@ import java.util.List;
 @Table(name = "products")
 public class Product {
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product",
+            cascade = CascadeType.REFRESH)
+    List<OrderDetail> orderDetails;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private int id;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
-
     @Column(name = "product_name")
     private String productName;
-
     @Column(name = "quantity_in_stock")
     private int quantityInStock;
-
     @Column(name = "import_price")
     private double importPrice;
-
     @Column(name = "export_price")
     private double exportPrice;
-
     @Column(name = "status")
     private boolean status;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product",
-            cascade = CascadeType.REFRESH)
-    List<OrderDetail> orderDetails;
 
     public Product() {
         status = true;
@@ -70,16 +63,16 @@ public class Product {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public boolean isStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Category getCategory() {
@@ -122,12 +115,12 @@ public class Product {
         this.exportPrice = exportPrice;
     }
 
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
     public List<OrderDetail> getOrderDetails() {
         return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     @Override

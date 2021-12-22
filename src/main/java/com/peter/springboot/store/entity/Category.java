@@ -7,17 +7,15 @@ import java.util.List;
 @Table(name = "categories")
 public class Category {
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category",
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
+    List<Product> products; // getter | setter gây ra stackoverflow
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private int id;
-
     @Column(name = "category_name")
     private String name;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category",
-            cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
-    List<Product> products; // getter | setter gây ra stackoverflow
 
     public Category() {
     }

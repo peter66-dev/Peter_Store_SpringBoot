@@ -1,9 +1,6 @@
 package com.peter.springboot.store.controller;
 
-import com.peter.springboot.store.entity.Customer;
-import com.peter.springboot.store.entity.Order;
-import com.peter.springboot.store.entity.OrderDetail;
-import com.peter.springboot.store.entity.Product;
+import com.peter.springboot.store.entity.*;
 import com.peter.springboot.store.service.CustomerService;
 import com.peter.springboot.store.service.OrderDetailService;
 import com.peter.springboot.store.service.OrderService;
@@ -11,32 +8,31 @@ import com.peter.springboot.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Controller
 @RequestMapping("/paymoney")
 public class PayMoneyController {
 
     @Autowired
-    private OrderService orSer;
+    private final OrderService orSer;
 
     @Autowired
-    private ProductService proSer;
+    private final ProductService proSer;
 
     @Autowired
-    private CustomerService cusSer;
+    private final CustomerService cusSer;
 
     @Autowired
-    private OrderDetailService orderDetailSer;
+    private final OrderDetailService orderDetailSer;
 
-    public PayMoneyController(OrderService ss, ProductService p, OrderDetailService od ,CustomerService cusSer) {
+    public PayMoneyController(OrderService ss, ProductService p, OrderDetailService od, CustomerService cusSer) {
         this.orSer = ss;
         this.proSer = p;
         this.orderDetailSer = od;
@@ -49,21 +45,22 @@ public class PayMoneyController {
         try {
             HttpSession session = request.getSession();
             Order order = (Order) session.getAttribute("order");
-            ArrayList<Product> cart = (ArrayList<Product>) session.getAttribute("cart");
+            Cart cart = (Cart) session.getAttribute("cart");
             if (order != null && order.getCustomer().getRoleId().equals("User")) {
                 System.out.println("Checked user role!");
-                if (checkQuantity(cart).isEmpty()) {
+                List<String> checkList = checkQuantity(cart);
+                if (checkList.isEmpty()) {
                     Customer customer = order.getCustomer();
                     customer.setPoints(customer.getPoints() + 1);
                     cusSer.saveCustomer(customer);
 
                     order.setStatus(true);
-                    order.setTotal((Math.round((float)order.getTotal() * (1 - order.getDiscount()) * 100.0) / 100.0));
+                    order.setTotal((Math.round((float) order.getTotal() * (1 - order.getDiscount()) * 100.0) / 100.0));
                     orSer.saveOrder(order);
                     System.out.println("Saved order! Order info: " + order);
 
                     //saving order detail
-                    for (Product pro : cart) {
+                    for (Product pro : cart.getCart().values()) {
                         OrderDetail od = new OrderDetail(pro, order, pro.getQuantityInStock(), pro.getQuantityInStock() * pro.getExportPrice());
                         orderDetailSer.saveOrderDetail(od);
                         System.out.println("Saved success! Order detail info: " + od);
@@ -74,15 +71,15 @@ public class PayMoneyController {
                     System.out.println("Subtracted quantity product success!");
                     proSer.setStatusProductQuantity();
 
-                    cart.removeAll(cart);
+                    System.out.println("Deleted cart: " + cart.deleteAll() + " product!");
                     session.removeAttribute("cart");
                     session.removeAttribute("order");
                     session.removeAttribute("total");
-                    model.addAttribute("products", proSer.getAllProducts());
-                    model.addAttribute("message_store","Thank you for supporting my small business!");
+                    model.addAttribute("products", proSer.findByStatusTrue());
+                    model.addAttribute("message_store", "Thank you for supporting my small business!");
                 } else {
                     String msg = "Sorry, we don't have enough quantity for these products ... ";
-                    for (String s : checkQuantity(cart)) {
+                    for (String s : checkList) {
                         msg += "\n" + s;
                     }
                     model.addAttribute("message_cart", msg);
@@ -98,9 +95,9 @@ public class PayMoneyController {
         return url;
     }
 
-    public List<String> checkQuantity(ArrayList<Product> cart) {
+    public List<String> checkQuantity(Cart cart) {
         List<String> list = new ArrayList<>();
-        for (Product pro : cart) {
+        for (Product pro : cart.getCart().values()) {
             if (pro.getQuantityInStock() > proSer.getProductById(pro.getId()).getQuantityInStock()) { // Không đủ hàng cho sp này!
                 list.add(pro.getProductName());
             }
@@ -108,8 +105,8 @@ public class PayMoneyController {
         return list;
     }
 
-    public void subQuantityProduct(ArrayList<Product> cart){
-        for (Product pro: cart) {
+    public void subQuantityProduct(Cart cart) {
+        for (Product pro : cart.getCart().values()) {
             Product proInStock = proSer.getProductById(pro.getId());
             proInStock.setQuantityInStock(proInStock.getQuantityInStock() - pro.getQuantityInStock());
             proSer.saveProduct(proInStock);
