@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,8 +41,9 @@ public class PayMoneyController {
     }
 
     @GetMapping("/paybill")
-    public String paybill(HttpServletRequest request, Model model) {
-        String url = "store/list-products";
+    public String paybill(HttpServletRequest request, Model model, RedirectAttributes rm) {
+//        String url = "store/list-products";
+        String url = "redirect:/store/list";
         try {
             HttpSession session = request.getSession();
             Order order = (Order) session.getAttribute("order");
@@ -75,8 +77,7 @@ public class PayMoneyController {
                     session.removeAttribute("cart");
                     session.removeAttribute("order");
                     session.removeAttribute("total");
-                    model.addAttribute("products", proSer.findByStatusTrue());
-                    model.addAttribute("message_store", "Thank you for supporting my small business!");
+                    rm.addAttribute("thank_message", "Thank you for supporting my small business!");
                 } else {
                     String msg = "Sorry, we don't have enough quantity for these products ... ";
                     for (String s : checkList) {

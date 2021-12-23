@@ -7,9 +7,12 @@ import com.peter.springboot.store.entity.Product;
 import com.peter.springboot.store.service.OrderService;
 import com.peter.springboot.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,16 +36,68 @@ public class ProductController {
     }
 
     @GetMapping("/list")
-    public String getAllProducts(Model model) {
-        List<Product> list = proSer.findByStatusTrue();
-        model.addAttribute("products", list);
-        return "store/list-products";
+    public String getAllProducts(Model model, HttpServletRequest request) {
+        String msg = request.getParameter("thank_message");
+        if (msg != null) {
+            System.out.println(msg);
+            model.addAttribute("message_store", msg);
+        }
+        model.addAttribute("searchValue", "_");
+        return listByPage(model, 1, "_", "exportPrice", "asc", "false");
+    }
+
+    @GetMapping("/page/{pageNumber}/{searchValue}")
+    public String listByPage(Model model,
+                             @PathVariable("pageNumber") int currentPage,
+                             @PathVariable("searchValue") String searchValue,
+                             @Param("sortField") String sortField,
+                             @Param("sortDir") String sortDir,
+                             @Param("reverse") String reverse) {
+        String url = "store/list-products";
+        try {
+            if (reverse.equals("true")) {
+                sortDir = sortDir.equals("asc") ? "desc" : "asc";
+            }
+            Page<Product> page = proSer.showProductStore(currentPage, sortField, sortDir);
+            List<Product> list = page.getContent();
+            model.addAttribute("products", list);
+            model.addAttribute("currentPage", currentPage);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("totalItems", page.getTotalElements());
+            model.addAttribute("sortField", sortField);
+            model.addAttribute("sortDir", sortDir);
+            model.addAttribute("reverse", reverse);
+        } catch (Exception ex) {
+            url = "error-page";
+            model.addAttribute("error_message", ex.getMessage());
+        }
+        return url;
     }
 
     @GetMapping("/search")
     public String searchProducts(@RequestParam("searchValue") String productName, Model model) {
-        List<Product> list = proSer.findByProductNameContaining(productName);
-        model.addAttribute("products", list);
+        Page<Product> page = proSer.findByProductNameContaining(productName, 1, "exportPrice", "asc");
+        List<Product> list = page.getContent();
+        model.addAttribute("searchValue", productName);
+        if (list.isEmpty()) {
+            model.addAttribute("message_store", "Can not find this product!");
+            model.addAttribute("products", list);
+            model.addAttribute("currentPage", 1);
+            model.addAttribute("totalPages", 0);
+            model.addAttribute("totalItems", 0);
+            model.addAttribute("sortField", "productName");
+            model.addAttribute("sortDir", "asc");
+            model.addAttribute("reverse", "true");
+        } else {
+            model.addAttribute("products", list);
+            model.addAttribute("currentPage", 1);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("totalItems", page.getTotalElements());
+            model.addAttribute("sortField", "exportPrice");
+            model.addAttribute("sortDir", "asc");
+            model.addAttribute("reverse", "true");
+            model.addAttribute("reverseSortDir", "asc");
+        }
         return "store/list-products";
     }
 
@@ -96,7 +151,7 @@ public class ProductController {
                     session.setAttribute("cart", cart);
                 }
             }
-            model.addAttribute("products", proSer.findByStatusTrue());
+            url = getAllProducts(model, request);
             model.addAttribute("message_store", msg);
         } catch (Exception ex) {
             model.addAttribute("error_message", ex.getMessage());
@@ -117,8 +172,7 @@ public class ProductController {
                     double total = cart.getTotal();
                     session.setAttribute("total", Math.round(total * (1 - order.getDiscount()) * 100.0) / 100.0);
                 } else {
-                    url = "store/list-products";
-                    model.addAttribute("products", proSer.findByStatusTrue());
+                    url = getAllProducts(model, request);
                     model.addAttribute("message_store",
                             "You did not buy anything here!");
                 }

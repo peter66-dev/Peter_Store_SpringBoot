@@ -1,7 +1,6 @@
 package com.peter.springboot.store.controller;
 
 import com.peter.springboot.store.entity.Customer;
-import com.peter.springboot.store.entity.Product;
 import com.peter.springboot.store.service.CustomerService;
 import com.peter.springboot.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -55,9 +53,7 @@ public class LoginController {
                 if (c.getRoleId().equals("Admin")) {
                     url = "admin/admin-page";
                 } else if (c.getRoleId().equals("User")) { // User role
-                    List<Product> list = proSer.findByStatusTrue();
-                    url = "store/list-products";
-                    model.addAttribute("products", list);
+                    url = "redirect:/store/list";
                 } else {
                     url = "error-page";
                     model.addAttribute("error_message", "Your role is not supported! Create a new account please!");
@@ -77,6 +73,7 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        session.removeAttribute("userLogin");
         session.invalidate();
         return "redirect:/login";
     }
